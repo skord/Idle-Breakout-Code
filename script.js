@@ -1,8 +1,75 @@
-//decodes base64 to ascii
-function b64toa(){
-var data1 = document.getElementById("b64").value;
-var output = atob(data1);
-document.getElementById("op").innerHTML = "<code style='color:blue'>"+output+"</code>"
+// Loads a base64 save code, decodes it, and populates all form fields
+function loadSave(){
+  var b64Input = document.getElementById("b64").value.trim();
+  if (!b64Input) return;
+
+  var decoded;
+  try {
+    decoded = atob(b64Input);
+  } catch(e) {
+    document.getElementById("loadStatus").innerHTML = "<code style='color:red'>Invalid base64 string!</code>";
+    return;
+  }
+
+  var parts = decoded.split(",");
+
+  // Show raw decoded data for reference
+  document.getElementById("rawData").innerHTML = "<code style='color:blue; word-break:break-all'>" + decoded + "</code>";
+
+  // Map indices to field IDs based on the save format
+  var fieldMap = {
+    0: "level",
+    1: "money",
+    2: "gold",
+    // 3-27: fixed/internal values
+    28: "basic",
+    29: "plasma",
+    30: "sniper",
+    31: "scatter",
+    32: "cannon",
+    33: "poison",
+    // 34-36: unused
+    37: "u1",   // Basic Ball Speed
+    38: "u2",   // Basic Ball Power
+    39: "u3",   // Plasma Ball Range
+    40: "u4",   // Plasma Ball Power
+    41: "u5",   // Sniper Ball Speed
+    42: "u6",   // Sniper Ball Power
+    43: "u7",   // Scatter Ball Extra Balls
+    44: "u8",   // Scatter Ball Power
+    45: "u9",   // Cannon Ball Speed
+    46: "u10",  // Cannon Ball Power
+    47: "u11",  // Poison Ball Speed
+    48: "u12",  // Poison Ball Power
+    // 49: unused
+    50: "u13",  // Laser(s) Power
+    51: "u14",  // Click Power
+    52: "p1",   // Level Cash Complete Bonus
+    53: "p2",   // Ball Speed Increase
+    54: "p3",   // Ball Power Multiplier
+    55: "p4",   // Unlock VAUS Laser
+    56: "p5",   // Maximum Number of Balls
+    // 57-103: fixed/internal values
+    104: "blackbricks",
+    // 105-108: fixed
+    109: "skillpoints"
+    // 110-112: fixed
+  };
+
+  var loaded = 0;
+  for (var idx in fieldMap) {
+    var fieldId = fieldMap[idx];
+    var el = document.getElementById(fieldId);
+    if (el && parts[idx] !== undefined) {
+      el.value = parts[idx];
+      loaded++;
+    }
+  }
+
+  document.getElementById("loadStatus").innerHTML = "<code style='color:green'>Loaded " + loaded + " fields from save code (" + parts.length + " total values)</code>";
+
+  // Regenerate the output code with loaded values
+  getCode();
 }
 
 function status(){

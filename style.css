@@ -9,6 +9,23 @@ input {
   box-sizing: border-box;
   text-align:center;
 }
+button {
+    padding: 12px 30px;
+    margin: 8px 0;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    font-size: 16px;
+}
+button:hover {
+    background-color: #45a049;
+}
+#loadStatus, #rawData {
+    margin: 8px auto;
+    width: 50%;
+    word-break: break-all;
+}
 .output {
     padding: 12px 20px;
     width:50%;

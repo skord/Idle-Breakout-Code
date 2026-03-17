@@ -7,6 +7,12 @@
 </head>
 <body>
 <h1>Idle Breakout Savecode Generator</h1>
+<h3>--Load Existing Save--</h3>
+<input type="text" placeholder="Paste base64 save code here" id="b64">
+<br>
+<button onclick="loadSave()">Load Save Code</button>
+<div id="loadStatus"></div>
+<br>
 <h3>--Valuables--</h3>
 <input type="number" onkeyup="getCode()" onkeydown="status()" placeholder="Level" id="level">
 <br>
@@ -75,8 +81,6 @@
 <br>
 <div id="status"></div>
 <br>
-<input type="text" onkeyup="b64toa()" placeholder="Base64 to string" id="b64">
-<br>
-<div id="op"></div>
+<div id="rawData"></div>
 </body>
 </html>
